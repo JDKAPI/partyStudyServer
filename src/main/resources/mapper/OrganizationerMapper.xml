@@ -2,7 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zcy.party.dao.OrganizationerMapper">
-<select id="verifyAccount" resultType="java.lang.Integer">
-    select count(*) from organization_memery;
+    <resultMap type="com.zcy.party.domain.User" id="ormemInfo" >
+        <id property="id" column="ormem_id"/>
+        <result property="type" column="type"/>
+        <result property="name" column="ormem_name"/>
+    </resultMap>
+<select id="verifyAccount" resultMap="ormemInfo">
+    select ormem_id,ormem_name,type from organization_memery where ormem_acc=#{account} and ormem_pass=#{password};
 </select>
 </mapper>

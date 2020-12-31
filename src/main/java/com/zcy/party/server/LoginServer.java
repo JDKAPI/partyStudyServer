@@ -4,5 +4,5 @@ import com.zcy.party.domain.Login;
 import com.zcy.party.domain.User;
 
 public interface LoginServer {
-    int verifyAccount(Login login);
+    User verifyAccount(Login login);
 }

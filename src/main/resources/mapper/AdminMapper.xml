@@ -2,7 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zcy.party.dao.AdminMapper">
-<select id="verifyAccount" resultType="java.lang.Integer">
-    select count(*) from root;
+    <resultMap type="com.zcy.party.domain.User" id="rootInfo" >
+        <id property="id" column="root_id"/>
+        <result property="type" column="type"/>
+        <result property="name" column="root_acc"/>
+    </resultMap>
+    <select id="verifyAccount" resultMap="rootInfo">
+    select root_id,root_acc,type from root where root_acc=#{account} and root_pass=#{password};
 </select>
 </mapper>

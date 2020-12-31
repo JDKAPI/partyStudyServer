@@ -1,8 +1,9 @@
 package com.zcy.party.dao;
 
+import com.zcy.party.domain.User;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentMapper {
-    int verifyAccount(String stu_id,String stu_pass);
+    User verifyAccount(String stu_id, String stu_pass);
 }

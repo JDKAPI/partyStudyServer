@@ -26,20 +26,23 @@ public class LoginController {
         login.setId(request.getParameter("username"));
         login.setPass(request.getParameter("password"));
         login.setType(Integer.parseInt(request.getParameter("type")));
-        int res = loginServer.verifyAccount(login);
-        if(res==1){
+        User res = loginServer.verifyAccount(login);
+        if(res.getType()==1){
             jsonObject.put("code", 1);
-            jsonObject.put("msg", "管理员登录成功");
+            jsonObject.put("id", res.getId());
+            jsonObject.put("name", res.getName());
             session.setAttribute("name", login.getId());
         }
-        else if(res==2){
+        else if(res.getType()==3){
             jsonObject.put("code", 3);
-            jsonObject.put("msg", "学生登录成功");
+            jsonObject.put("id", res.getId());
+            jsonObject.put("name",res.getName());
             session.setAttribute("name", login.getId());
         }
-        else if(res==3){
+        else if(res.getType()==2){
             jsonObject.put("code", 2);
-            jsonObject.put("msg", "教师登录成功");
+            jsonObject.put("id", res.getId());
+            jsonObject.put("name", res.getName());
             session.setAttribute("name", login.getId());
         }
         else {
