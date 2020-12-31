@@ -1,6 +1,6 @@
 package com.zcy.party.domain;
 
-public class Admin {
+public class Admin implements User{
     private String root_acc;
     private String root_pass;
 

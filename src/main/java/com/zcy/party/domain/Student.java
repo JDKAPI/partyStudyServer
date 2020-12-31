@@ -1,6 +1,6 @@
 package com.zcy.party.domain;
 
-public class Student {
+public class Student implements User{
     private String stu_id;
     private String stu_pass;
     private String stu_name;

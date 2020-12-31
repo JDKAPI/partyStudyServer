@@ -1,6 +1,6 @@
 package com.zcy.party.domain;
 
-public class Organizationer {
+public class Organizationer implements User{
     private int ormem_id;
     private String ormem_acc;
     private String ormem_pass;
