@@ -10,4 +10,8 @@
 <select id="verifyAccount" resultMap="userInfo">
     select stu_id,stu_name,type from student where stu_id = #{stu_id} and stu_pass=#{stu_pass};
 </select>
+    <insert id="insertGrade">
+        insert into studentgrade(id,AnswerTimes,CorrectedNum,DisCorrectedNum,MinNum,MaxNum)
+        values(#{id},#{AnswerTimes},#{CorrectedNum},#{DisCorrectedNum},#{MinNum},#{MaxNum});
+    </insert>
 </mapper>

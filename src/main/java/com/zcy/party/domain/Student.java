@@ -7,6 +7,67 @@ public class Student {
     private String stu_grade;
     private int stu_school;
     private int stu_orgamem;
+    private int AnswerTimes;
+    private int CorrectedNum;
+    private int DisCorrectedNum;
+    private int MinNums;
+    private int MAx;
+    public Student(){
+
+    }
+    public Student(String stu_id, String stu_pass, String stu_name, String stu_grade, int stu_school, int stu_orgamem, int answerTimes, int correctedNum, int disCorrectedNum, int minNums, int MAx) {
+        this.stu_id = stu_id;
+        this.stu_pass = stu_pass;
+        this.stu_name = stu_name;
+        this.stu_grade = stu_grade;
+        this.stu_school = stu_school;
+        this.stu_orgamem = stu_orgamem;
+        this.AnswerTimes = answerTimes;
+        this.CorrectedNum = correctedNum;
+        this.DisCorrectedNum = disCorrectedNum;
+        this.MinNums = minNums;
+        this.MAx = MAx;
+    }
+
+    public int getAnswerTimes() {
+        return AnswerTimes;
+    }
+
+    public void setAnswerTimes(int answerTimes) {
+        AnswerTimes = answerTimes;
+    }
+
+    public int getCorrectedNum() {
+        return CorrectedNum;
+    }
+
+    public void setCorrectedNum(int correctedNum) {
+        CorrectedNum = correctedNum;
+    }
+
+    public int getDisCorrectedNum() {
+        return DisCorrectedNum;
+    }
+
+    public void setDisCorrectedNum(int disCorrectedNum) {
+        DisCorrectedNum = disCorrectedNum;
+    }
+
+    public int getMinNums() {
+        return MinNums;
+    }
+
+    public void setMinNums(int minNums) {
+        MinNums = minNums;
+    }
+
+    public int getMAx() {
+        return MAx;
+    }
+
+    public void setMAx(int MAx) {
+        this.MAx = MAx;
+    }
 
     public String getStu_id() {
         return stu_id;

@@ -2,7 +2,10 @@ package com.zcy.party.domain;
 public class User {
     private int type;
     private String id;
-
+    private String name;
+    public User(int type, String id, String name){
+        this.id=id;this.type=type;this.name=name;
+    }
     public String getName() {
         return name;
     }
@@ -11,7 +14,7 @@ public class User {
         this.name = name;
     }
 
-    private String name;
+
 
     public int getType() {
         return type;

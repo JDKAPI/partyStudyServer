@@ -19,15 +19,15 @@ public class LoginServerImpl implements LoginServer {
     OrganizationerMapper organizationerMapper;
     @Override
     public User verifyAccount(Login login) {
-        if(studentMapper.verifyAccount(login.getId(),login.getPass())!=null&&studentMapper.verifyAccount(login.getId(),login.getPass()).getType()==3) {
+        if(login.getType()==3&&studentMapper.verifyAccount(login.getId(),login.getPass())!=null&&studentMapper.verifyAccount(login.getId(),login.getPass()).getType()==3) {
             return studentMapper.verifyAccount(login.getId(),login.getPass());
         }
-        else if(adminMapper.verifyAccount(login.getId(),login.getPass())!=null&&adminMapper.verifyAccount(login.getId(),login.getPass()).getType()==1){
+        else if(login.getType()==1&&adminMapper.verifyAccount(login.getId(),login.getPass())!=null&&adminMapper.verifyAccount(login.getId(),login.getPass()).getType()==1){
             return adminMapper.verifyAccount(login.getId(),login.getPass());
         }
-        else if(organizationerMapper.verifyAccount(login.getId(),login.getPass())!=null&&organizationerMapper.verifyAccount(login.getId(),login.getPass()).getType()==2){
+        else if(login.getType()==2&&organizationerMapper.verifyAccount(login.getId(),login.getPass())!=null&&organizationerMapper.verifyAccount(login.getId(),login.getPass()).getType()==2){
             return organizationerMapper.verifyAccount(login.getId(),login.getPass());
         }
-        else return null;
+        else return new User(0,"error","error");
     }
 }
