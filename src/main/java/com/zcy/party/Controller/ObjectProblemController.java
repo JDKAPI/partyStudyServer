@@ -24,9 +24,10 @@ public class ObjectProblemController {
     public Object getAllObjPro(HttpServletRequest request, HttpSession session){
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
+        //JSONArray是一个数组对象
         List<ObjectProblem>  allobj = objectProblemServer.getAllObjProblem();
         for(int i=0;i<allobj.size();i++){
-            jsonArray.add(i,allobj.get(i));
+            jsonArray.add(allobj.get(i));
         }
         jsonObject.put("objectproblems",jsonArray);
         return jsonObject;

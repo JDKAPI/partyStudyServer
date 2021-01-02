@@ -10,4 +10,7 @@
 <select id="verifyAccount" resultMap="ormemInfo">
     select ormem_id,ormem_name,type from organization_memery where ormem_acc=#{account} and ormem_pass=#{password};
 </select>
+    <select id="getNameById" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select ormem_name from organization_memery where ormem_id = #{id};
+    </select>
 </mapper>

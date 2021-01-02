@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrganizationerMapper {
     User verifyAccount(String account, String password);
+    String getNameById(int id);
 }

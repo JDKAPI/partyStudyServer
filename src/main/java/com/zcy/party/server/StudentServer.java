@@ -1,5 +1,8 @@
 package com.zcy.party.server;
 
+
+import com.zcy.party.domain.Student;
+
 public interface StudentServer {
-    void insertGrade(String id,int AnswerTimes, int CorrectedNum,int DisCorrectedNum,int MinNum,int MAxNum);
+    Student getStuByStuID(String id);
 }

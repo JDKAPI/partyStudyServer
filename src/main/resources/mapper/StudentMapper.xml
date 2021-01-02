@@ -7,11 +7,24 @@
         <result property="type" column="type"/>
         <result property="name" column="stu_name"/>
     </resultMap>
-<select id="verifyAccount" resultMap="userInfo">
-    select stu_id,stu_name,type from student where stu_id = #{stu_id} and stu_pass=#{stu_pass};
-</select>
-    <insert id="insertGrade">
-        insert into studentgrade(id,AnswerTimes,CorrectedNum,DisCorrectedNum,MinNum,MaxNum)
-        values(#{id},#{AnswerTimes},#{CorrectedNum},#{DisCorrectedNum},#{MinNum},#{MaxNum});
-    </insert>
+    <resultMap id="getStuByStuIDMapper" type="com.zcy.party.domain.Student">
+        <id property="stu_id" column="stu_id"/>
+        <result property="stu_grade" column="stu_grade"/>
+        <result property="stu_pass" column="stu_pass"/>
+        <result property="stu_name" column="stu_name"/>
+        <result property="major" column="major"/>
+        <association property="stu_orgamem" column="stu_orgamem"
+                     select="com.zcy.party.dao.OrganizationerMapper.getNameById"></association>
+        <association property="stu_school" column="stu_school"
+                     select="com.zcy.party.dao.SchoolMapper.getNameById"></association>
+        <collection property="grades" column="stu_id"
+                    select="com.zcy.party.dao.GradeMapper.getAllGrade"></collection>
+
+    </resultMap>
+    <select id="verifyAccount" resultMap="userInfo">
+        select stu_id,stu_name,type from student where stu_id = #{stu_id} and stu_pass=#{stu_pass};
+    </select>
+    <select id="getStuByStuID" parameterType="java.lang.String" resultMap="getStuByStuIDMapper">
+        select * from student where stu_id=#{id};
+    </select>
 </mapper>

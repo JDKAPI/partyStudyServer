@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zcy.party.dao.GradeMapper">
+
+    <resultMap id="getAll" type="com.zcy.party.domain.Grade">
+        <id property="id" column="id"/>
+        <result property="CorrectedNum" column="CorrectedNum"/>
+        <result property="stu_id" column="stu_id"/>
+        <result property="DisCorrectedNum" column="DisCorrectedNum"/>
+        <result property="createTime" column="createTime"/>
+        <association property="questionMaster" column="questionMaster"
+                     select="com.zcy.party.dao.OrganizationerMapper.getNameById"/>
+    </resultMap>
+    <select id="getAllGrade" parameterType="java.lang.String" resultMap="getAll">
+        select * from studentgrade where stu_id = #{stu_id};
+    </select>
+    <insert id="insertStuGrade" parameterType="com.zcy.party.domain.Grade">
+        insert into studentGrade(stu_id,CorrectedNum,
+                                 DisCorrectedNum,questionMaster,createTime) values (#{stu_id},
+                                           #{CorrectedNum},
+                                           #{DisCorrectedNum},
+                                           #{questionMaster},
+                                           #{createTime});
+    </insert>
+</mapper>

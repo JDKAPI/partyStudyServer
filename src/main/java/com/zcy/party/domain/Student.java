@@ -1,74 +1,41 @@
 package com.zcy.party.domain;
 
+import java.util.List;
+
 public class Student {
     private String stu_id;
     private String stu_pass;
     private String stu_name;
     private String stu_grade;
-    private int stu_school;
-    private int stu_orgamem;
-    private int AnswerTimes;
-    private int CorrectedNum;
-    private int DisCorrectedNum;
-    private int MinNums;
-    private int MAx;
+    private String stu_school;
+    private String stu_orgamem;
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    private String major;
+    private List<Grade> grades;
     public Student(){
 
     }
-    public Student(String stu_id, String stu_pass, String stu_name, String stu_grade, int stu_school, int stu_orgamem, int answerTimes, int correctedNum, int disCorrectedNum, int minNums, int MAx) {
+    public Student(String stu_id, String stu_pass, String stu_name, String stu_grade, String stu_school, String stu_orgamem,String major) {
         this.stu_id = stu_id;
         this.stu_pass = stu_pass;
         this.stu_name = stu_name;
         this.stu_grade = stu_grade;
         this.stu_school = stu_school;
         this.stu_orgamem = stu_orgamem;
-        this.AnswerTimes = answerTimes;
-        this.CorrectedNum = correctedNum;
-        this.DisCorrectedNum = disCorrectedNum;
-        this.MinNums = minNums;
-        this.MAx = MAx;
+        this.major = major;
     }
 
-    public int getAnswerTimes() {
-        return AnswerTimes;
+    public List<Grade> getGrades() {
+        return grades;
     }
-
-    public void setAnswerTimes(int answerTimes) {
-        AnswerTimes = answerTimes;
-    }
-
-    public int getCorrectedNum() {
-        return CorrectedNum;
-    }
-
-    public void setCorrectedNum(int correctedNum) {
-        CorrectedNum = correctedNum;
-    }
-
-    public int getDisCorrectedNum() {
-        return DisCorrectedNum;
-    }
-
-    public void setDisCorrectedNum(int disCorrectedNum) {
-        DisCorrectedNum = disCorrectedNum;
-    }
-
-    public int getMinNums() {
-        return MinNums;
-    }
-
-    public void setMinNums(int minNums) {
-        MinNums = minNums;
-    }
-
-    public int getMAx() {
-        return MAx;
-    }
-
-    public void setMAx(int MAx) {
-        this.MAx = MAx;
-    }
-
     public String getStu_id() {
         return stu_id;
     }
@@ -101,19 +68,19 @@ public class Student {
         this.stu_grade = stu_grade;
     }
 
-    public int getStu_school() {
+    public String getStu_school() {
         return stu_school;
     }
 
-    public void setStu_school(int stu_school) {
+    public void setStu_school(String stu_school) {
         this.stu_school = stu_school;
     }
 
-    public int getStu_orgamem() {
+    public String getStu_orgamem() {
         return stu_orgamem;
     }
 
-    public void setStu_orgamem(int stu_orgamem) {
+    public void setStu_orgamem(String stu_orgamem) {
         this.stu_orgamem = stu_orgamem;
     }
 }
