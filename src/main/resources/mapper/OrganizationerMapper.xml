@@ -7,10 +7,25 @@
         <result property="type" column="type"/>
         <result property="name" column="ormem_name"/>
     </resultMap>
+    <resultMap id="getAllOrganizationerMapper" type="com.zcy.party.domain.Organizationer">
+        <id property="ormem_acc" column="ormem_acc"/>
+        <result property="ormem_pass" column="ormem_pass"/>
+        <result property="ormem_name" column="ormem_name"/>
+        <association property="school" column="xueyuan"
+                     select="com.zcy.party.dao.SchoolMapper.getNameById"></association>
+    </resultMap> 
+
 <select id="verifyAccount" resultMap="ormemInfo">
     select ormem_id,ormem_name,type from organization_memery where ormem_acc=#{account} and ormem_pass=#{password};
 </select>
     <select id="getNameById" parameterType="java.lang.Integer" resultType="java.lang.String">
         select ormem_name from organization_memery where ormem_id = #{id};
     </select>
+    <select id="getAllOrganizationer" resultMap="getAllOrganizationerMapper">
+                select * from organization_memery;
+    </select>
+    <update id="updateInfo" parameterType="com.zcy.party.domain.Organizationer">
+        update organization_memery set ormem_pass=#{ormem_pass},ormem_name=#{ormem_name},xueyuan=#{school}
+        where ormem_acc=#{ormem_acc};
+    </update>
 </mapper>
