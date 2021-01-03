@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zcy.party.dao.GradeMapper;
+import com.zcy.party.dao.SchoolMapper;
 import com.zcy.party.domain.Grade;
+import com.zcy.party.domain.ResultData;
 import com.zcy.party.domain.Student;
 import com.zcy.party.server.GradeServer;
 import com.zcy.party.server.StudentServer;
@@ -16,6 +18,7 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -28,6 +31,8 @@ public class StudentController {
     StudentServerImpl studentServer;
     @Autowired
     GradeServerImpl gradeServer;
+    @Autowired
+    SchoolMapper schoolMapper;
     @ResponseBody
     @CrossOrigin
     @RequestMapping(value = "/api/insertGrade",method = RequestMethod.POST)
@@ -138,6 +143,43 @@ public class StudentController {
             jsonArray.add(students.get(i));
         }
         jsonObject.put("students",jsonArray);
+        return jsonObject;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "api/getMeigeSchoolRenshu",method = RequestMethod.GET)
+    public Object  getMeigeSchoolRenshu(){
+        List<ResultData> list = studentServer.getMeigeSchoolRenshu();
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+        class Datatype{
+            String name;
+            int value;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public int getValue() {
+                return value;
+            }
+
+            public void setValue(int data) {
+                this.value = data;
+            }
+        }
+        for(int i=0;i<list.size();i++){
+            String s = schoolMapper.getNameById(list.get(i).getType());
+            Datatype data = new Datatype();
+            data.setName(s);
+            data.setValue(list.get(i).getData());
+            jsonArray.add(data);
+        }
+        jsonObject.put("data",jsonArray);
         return jsonObject;
     }
 }

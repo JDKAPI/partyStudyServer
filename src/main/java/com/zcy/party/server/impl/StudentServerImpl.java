@@ -1,6 +1,7 @@
 package com.zcy.party.server.impl;
 
 import com.zcy.party.dao.StudentMapper;
+import com.zcy.party.domain.ResultData;
 import com.zcy.party.domain.Student;
 import com.zcy.party.server.StudentServer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,10 @@ public class StudentServerImpl implements StudentServer {
     @Override
     public List<Student> getAllStudentInfo() {
         return studentMapper.getAllStudentInfo();
+    }
+
+    @Override
+    public List<ResultData> getMeigeSchoolRenshu() {
+        return studentMapper.getMeigeSchoolRenshu();
     }
 }

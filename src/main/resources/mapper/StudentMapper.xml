@@ -43,5 +43,11 @@
                                                                                          #{stu_name},#{stu_grade},
                                                                                          #{stu_school},#{major});
     </insert>
-
+    <resultMap id="getMeigeSchoolRenshuMapper" type="com.zcy.party.domain.ResultData">
+          <id property="type" column="type"></id>
+        <result property="data" column="data"/>
+    </resultMap>
+    <select id="getMeigeSchoolRenshu" resultMap="getMeigeSchoolRenshuMapper">
+        select stu_school as type ,COUNT(stu_id) as data from student group by stu_school;
+    </select>
 </mapper>

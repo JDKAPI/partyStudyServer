@@ -1,6 +1,7 @@
 package com.zcy.party.dao;
 
 
+import com.zcy.party.domain.ResultData;
 import com.zcy.party.domain.Student;
 import com.zcy.party.domain.User;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,5 @@ public interface StudentMapper {
     int deleteStudent(String id);
     int updateStudentById(Student student);
     int insertStudent(Student student);
+    List<ResultData> getMeigeSchoolRenshu();
 }
