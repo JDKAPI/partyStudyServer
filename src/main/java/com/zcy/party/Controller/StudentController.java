@@ -65,7 +65,6 @@ public class StudentController {
                 this.createTime = createTime;
                 this.questionMaster = questionMaster;
             }
-
             public String getQuestionMaster() {
                 return questionMaster;
             }
@@ -127,6 +126,18 @@ public class StudentController {
         jsonObject.put("grade",student.getStu_grade());
         jsonObject.put("major",student.getMajor());
         jsonObject.put("school",student.getStu_school());
+        return jsonObject;
+    }
+    @CrossOrigin
+    @RequestMapping(value = "api/getAllStuInfo",method = RequestMethod.GET)
+    public Object getAllStuInfo(HttpServletRequest request){
+        List<Student> students = studentServer.getAllStudentInfo();
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray =new JSONArray();
+        for(int i=0;i<students.size();i++){
+            jsonArray.add(students.get(i));
+        }
+        jsonObject.put("students",jsonArray);
         return jsonObject;
     }
 }

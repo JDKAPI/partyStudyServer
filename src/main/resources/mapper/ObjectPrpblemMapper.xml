@@ -5,4 +5,13 @@
     <select id="getAllObjProblem" resultType="com.zcy.party.domain.ObjectProblem">
         select * from Objective_problems;
     </select>
+    <update id="updateObjProblem" parameterType="com.zcy.party.domain.ObjectProblem">
+        update objective_problems set objectpro_com=#{objectpro_com},objectpro_A=#{objectpro_A},objectpro_B=#{objectpro_B},objectpro_C=#{objectpro_C},objectpro_D=#{objectpro_D},objectpro_ans=#{objectpro_ans} where objectpro_id=#{objectpro_id};
+    </update>
+    <delete id="deleteProblem" parameterType="java.lang.Integer">
+        delete from objective_problems where objectpro_id = #{id};
+    </delete>
+    <insert id="insertProblem" parameterType="com.zcy.party.domain.ObjectProblem">
+        insert into objective_problems(objectpro_com,objectpro_A,objectpro_B,objectpro_C,objectpro_D,objectpro_ans) values (#{objectpro_com},#{objectpro_A},#{objectpro_B},#{objectpro_C},#{objectpro_D},#{objectpro_ans});
+    </insert>
 </mapper>

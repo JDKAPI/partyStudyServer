@@ -27,4 +27,21 @@
     <select id="getStuByStuID" parameterType="java.lang.String" resultMap="getStuByStuIDMapper">
         select * from student where stu_id=#{id};
     </select>
+    <select id="getAllStudentInfo" resultMap="getStuByStuIDMapper">
+        select * from student;
+    </select>
+    <delete id="deleteStudent" parameterType="java.lang.String">
+        delete from student where stu_id = #{id};
+    </delete>
+
+    <update id="updateStudentById" parameterType="com.zcy.party.domain.Student">
+        update student set stu_name=#{stu_name},stu_pass=#{stu_pass},stu_grade=#{stu_grade},stu_school=#{stu_school},major=#{major} where stu_id=#{stu_id};
+    </update>
+    <insert id="insertStudent" parameterType="com.zcy.party.domain.Student">
+         insert into student(stu_id,stu_pass,stu_name,stu_grade,stu_school,major) values
+                                                                                         (#{stu_id},#{stu_pass},
+                                                                                         #{stu_name},#{stu_grade},
+                                                                                         #{stu_school},#{major});
+    </insert>
+
 </mapper>

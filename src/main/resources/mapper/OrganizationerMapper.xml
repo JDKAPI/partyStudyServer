@@ -28,4 +28,10 @@
         update organization_memery set ormem_pass=#{ormem_pass},ormem_name=#{ormem_name},xueyuan=#{school}
         where ormem_acc=#{ormem_acc};
     </update>
+    <delete id="deleteTeacher" parameterType="java.lang.String">
+        delete from organization_memery where ormem_acc = #{account};
+    </delete>
+    <insert id="insertTeacher" parameterType="com.zcy.party.domain.Organizationer">
+        insert into organization_memery(ormem_acc,ormem_pass,ormem_name,xueyuan) values(#{ormem_acc},#{ormem_pass},#{ormem_name},#{school});
+    </insert>
 </mapper>

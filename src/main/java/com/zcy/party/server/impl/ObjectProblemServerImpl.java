@@ -16,4 +16,19 @@ public class ObjectProblemServerImpl implements ObjectProblemServer {
     public List<ObjectProblem> getAllObjProblem() {
         return objectProblemMapper.getAllObjProblem();
     }
+
+    @Override
+    public int updateObjProblem(ObjectProblem objectProblem) {
+        return objectProblemMapper.updateObjProblem(objectProblem);
+    }
+
+    @Override
+    public int deleteProblem(int id) {
+        return objectProblemMapper.deleteProblem(id);
+    }
+
+    @Override
+    public int insertProblem(ObjectProblem objectProblem) {
+        return objectProblemMapper.insertProblem(objectProblem);
+    }
 }

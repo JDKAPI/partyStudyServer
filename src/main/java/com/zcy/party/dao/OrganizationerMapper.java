@@ -12,4 +12,6 @@ public interface OrganizationerMapper {
     String getNameById(int id);
     List<Organizationer> getAllOrganizationer();
     int updateInfo(Organizationer organizationer);
+    int deleteTeacher(String account);
+    int insertTeacher(Organizationer organizationer);
 }

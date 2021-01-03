@@ -6,6 +6,8 @@ import com.zcy.party.server.StudentServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class StudentServerImpl implements StudentServer {
@@ -14,5 +16,10 @@ public class StudentServerImpl implements StudentServer {
     @Override
     public Student getStuByStuID(String id) {
         return studentMapper.getStuByStuID(id);
+    }
+
+    @Override
+    public List<Student> getAllStudentInfo() {
+        return studentMapper.getAllStudentInfo();
     }
 }
