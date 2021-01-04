@@ -10,4 +10,5 @@ public interface StudentServer {
     Student getStuByStuID(String id);
     List<Student> getAllStudentInfo();
     List<ResultData> getMeigeSchoolRenshu();
+    List<Student> getStuByTeacherId(int id);
 }

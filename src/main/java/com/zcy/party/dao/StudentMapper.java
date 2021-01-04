@@ -18,4 +18,5 @@ public interface StudentMapper {
     int updateStudentById(Student student);
     int insertStudent(Student student);
     List<ResultData> getMeigeSchoolRenshu();
+    List<Student> getStuByTeacherId(int id);
 }

@@ -7,9 +7,11 @@ import com.zcy.party.dao.OrganizationerMapper;
 import com.zcy.party.dao.SubjectProblemMapper;
 import com.zcy.party.domain.Organizationer;
 import com.zcy.party.domain.Paper;
+import com.zcy.party.domain.Student;
 import com.zcy.party.domain.SubjectProblem;
 import com.zcy.party.server.PaperServer;
 import com.zcy.party.server.impl.PaperServerImpl;
+import com.zcy.party.server.impl.StudentServerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
@@ -30,6 +32,8 @@ public class TeacherController {
     PaperServerImpl paperServer;
     @Autowired
     SubjectProblemMapper subjectProblemMapper;
+    @Autowired
+    StudentServerImpl studentServer;
     @CrossOrigin
     @RequestMapping(value = "/api/getTeacherInfo",method = RequestMethod.GET)
     public Object getTeacherInfo(HttpServletRequest request){
@@ -138,5 +142,19 @@ public class TeacherController {
         if(i>0) jsonObject1.put("code",200);
         else jsonObject1.put("code",400);
         return jsonObject1;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "api/getAllstuByTeacherId",method = RequestMethod.GET)
+    public Object getAllstuByTeacherId(HttpServletRequest request){
+         String s = request.getParameter("id");
+         List<Student> students = studentServer.getStuByTeacherId(Integer.parseInt(s));
+         JSONArray jsonArray = new JSONArray();
+         for(int i=0;i<students.size();i++){
+             jsonArray.add(students.get(i));
+         }
+         JSONObject jsonObject = new JSONObject();
+         jsonObject.put("studentInfo",jsonArray);
+         return jsonObject;
     }
 }

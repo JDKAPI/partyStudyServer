@@ -28,4 +28,9 @@ public class StudentServerImpl implements StudentServer {
     public List<ResultData> getMeigeSchoolRenshu() {
         return studentMapper.getMeigeSchoolRenshu();
     }
+
+    @Override
+    public List<Student> getStuByTeacherId(int id) {
+        return studentMapper.getStuByTeacherId(id);
+    }
 }

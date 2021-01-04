@@ -50,4 +50,7 @@
     <select id="getMeigeSchoolRenshu" resultMap="getMeigeSchoolRenshuMapper">
         select stu_school as type ,COUNT(stu_id) as data from student group by stu_school;
     </select>
+    <select id="getStuByTeacherId" resultMap="getStuByStuIDMapper">
+        select * from student where stu_orgamem = #{id};
+    </select>
 </mapper>
