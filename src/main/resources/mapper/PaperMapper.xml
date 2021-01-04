@@ -66,4 +66,7 @@
     <select id="getPaperInfoById" resultMap="getPaperByCreatorIdMap" parameterType="java.lang.Integer">
         select * from paper where id=#{id};
     </select>
+    <insert id="insertPaper">
+         insert into paper(name,creator,one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve,thirteen,fourteen,fifteen,sixteen,seventeen,eighteen,nineteen,twenty,twentyone,twentytwo,twentythree,twentyfour,twentyfive) values (#{name},#{creator},#{yi},#{er},#{san},#{si},#{wu},#{liu},#{qi},#{ba},#{jiu},#{shi},#{shiyi},#{shier},#{shisan},#{shisi},#{shiwu},#{shiliu},#{shiqi},#{shiba},#{shijiu},#{ershi},#{eryi},#{erer},#{ersan},#{ersi},#{erwu});
+    </insert>
 </mapper>

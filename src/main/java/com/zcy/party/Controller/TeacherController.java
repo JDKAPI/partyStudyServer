@@ -1,20 +1,24 @@
 package com.zcy.party.Controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zcy.party.dao.OrganizationerMapper;
+import com.zcy.party.dao.SubjectProblemMapper;
 import com.zcy.party.domain.Organizationer;
 import com.zcy.party.domain.Paper;
+import com.zcy.party.domain.SubjectProblem;
 import com.zcy.party.server.PaperServer;
 import com.zcy.party.server.impl.PaperServerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StreamUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -24,6 +28,8 @@ public class TeacherController {
     OrganizationerMapper organizationerMapper;
     @Autowired
     PaperServerImpl paperServer;
+    @Autowired
+    SubjectProblemMapper subjectProblemMapper;
     @CrossOrigin
     @RequestMapping(value = "/api/getTeacherInfo",method = RequestMethod.GET)
     public Object getTeacherInfo(HttpServletRequest request){
@@ -88,5 +94,49 @@ public class TeacherController {
         int id = Integer.parseInt(request.getParameter("id"));
         jsonObject.put("paperInfo",paperServer.getPaperInfoById(id));
         return jsonObject;
+    }
+    @CrossOrigin
+    @RequestMapping(value = "api/getAllSubProblem",method = RequestMethod.GET)
+    public Object getAllSubProblem(HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        List<SubjectProblem> list = subjectProblemMapper.getAllSubProblem();
+        for(int i=0;i<list.size();i++){
+            jsonArray.add(list.get(i));
+        }
+        jsonObject.put("allsubProblem",jsonArray);
+        return jsonObject;
+    }
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "api/createPaper",method = RequestMethod.POST)
+    public Object createPaper(HttpServletRequest request) throws IOException {
+        String s = StreamUtils.copyToString(request.getInputStream(), Charset.forName("UTF-8"));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject = JSON.parseObject(s);
+        int creator = Integer.parseInt(jsonObject.get("creator").toString());
+        String name = jsonObject.get("name").toString();
+        JSONArray jsonArrayObj = new JSONArray();
+        jsonArrayObj = JSONArray.parseArray(jsonObject.get("objProblem").toString());
+        JSONArray jsonArraySub = new JSONArray();
+        jsonArraySub = JSONArray.parseArray(jsonObject.get("subProblem").toString());
+        int i = paperServer.insertPaper(name,creator,Integer.parseInt(jsonArrayObj.get(0).toString()),
+                Integer.parseInt(jsonArrayObj.get(1).toString()),Integer.parseInt(jsonArrayObj.get(2).toString()),
+                Integer.parseInt(jsonArrayObj.get(3).toString()),Integer.parseInt(jsonArrayObj.get(4).toString()),
+                Integer.parseInt(jsonArrayObj.get(5).toString()),Integer.parseInt(jsonArrayObj.get(6).toString()),
+                Integer.parseInt(jsonArrayObj.get(7).toString()),Integer.parseInt(jsonArrayObj.get(8).toString()),
+                Integer.parseInt(jsonArrayObj.get(9).toString()),Integer.parseInt(jsonArrayObj.get(10).toString()),
+                Integer.parseInt(jsonArrayObj.get(11).toString()),Integer.parseInt(jsonArrayObj.get(12).toString()),
+                Integer.parseInt(jsonArrayObj.get(13).toString()),Integer.parseInt(jsonArrayObj.get(14).toString()),
+                Integer.parseInt(jsonArrayObj.get(15).toString()),Integer.parseInt(jsonArrayObj.get(16).toString()),
+                Integer.parseInt(jsonArrayObj.get(17).toString()),Integer.parseInt(jsonArrayObj.get(18).toString()),
+                Integer.parseInt(jsonArrayObj.get(19).toString()),Integer.parseInt(jsonArraySub.get(0).toString()),
+                Integer.parseInt(jsonArraySub.get(1).toString()),Integer.parseInt(jsonArraySub.get(2).toString()),
+                Integer.parseInt(jsonArraySub.get(3).toString()),Integer.parseInt(jsonArraySub.get(4).toString())
+                );
+        JSONObject jsonObject1 = new JSONObject();
+        if(i>0) jsonObject1.put("code",200);
+        else jsonObject1.put("code",400);
+        return jsonObject1;
     }
 }

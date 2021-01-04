@@ -6,4 +6,7 @@
     <select id="getSubProblemById" parameterType="java.lang.Integer" resultType="com.zcy.party.domain.SubjectProblem">
        select * from subjective_problems where subpro_id = #{subpro_id};
     </select>
+    <select id="getAllSubProblem" resultType="com.zcy.party.domain.SubjectProblem">
+        select * from subjective_problems;
+    </select>
 </mapper>
