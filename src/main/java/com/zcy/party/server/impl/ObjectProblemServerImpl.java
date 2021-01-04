@@ -18,6 +18,11 @@ public class ObjectProblemServerImpl implements ObjectProblemServer {
     }
 
     @Override
+    public List<ObjectProblem> getTestProblem() {
+        return objectProblemMapper.getTestProblem();
+    }
+
+    @Override
     public int updateObjProblem(ObjectProblem objectProblem) {
         return objectProblemMapper.updateObjProblem(objectProblem);
     }

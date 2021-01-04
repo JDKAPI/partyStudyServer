@@ -10,6 +10,7 @@ import java.util.List;
 public interface OrganizationerMapper {
     User verifyAccount(String account, String password);
     String getNameById(int id);
+    Organizationer getOrganizationInfoById(int id);
     List<Organizationer> getAllOrganizationer();
     int updateInfo(Organizationer organizationer);
     int deleteTeacher(String account);

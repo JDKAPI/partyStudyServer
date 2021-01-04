@@ -34,4 +34,7 @@
     <insert id="insertTeacher" parameterType="com.zcy.party.domain.Organizationer">
         insert into organization_memery(ormem_acc,ormem_pass,ormem_name,xueyuan) values(#{ormem_acc},#{ormem_pass},#{ormem_name},#{school});
     </insert>
+    <select id="getOrganizationInfoById" parameterType="java.lang.Integer" resultMap="getAllOrganizationerMapper">
+        select * from organization_memery where ormem_id=#{id};
+    </select>
 </mapper>

@@ -14,4 +14,10 @@
     <insert id="insertProblem" parameterType="com.zcy.party.domain.ObjectProblem">
         insert into objective_problems(objectpro_com,objectpro_A,objectpro_B,objectpro_C,objectpro_D,objectpro_ans) values (#{objectpro_com},#{objectpro_A},#{objectpro_B},#{objectpro_C},#{objectpro_D},#{objectpro_ans});
     </insert>
+    <select id="getTestProblem" resultType="com.zcy.party.domain.ObjectProblem">
+        select * from Objective_problems ORDER BY rand() LIMIT 20;
+    </select>
+    <select id="getObjectInfoById" parameterType="java.lang.Integer" resultType="com.zcy.party.domain.ObjectProblem">
+        select * from Objective_problems where objectpro_id = #{id};
+    </select>
 </mapper>

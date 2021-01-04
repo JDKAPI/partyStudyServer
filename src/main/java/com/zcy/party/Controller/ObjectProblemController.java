@@ -32,4 +32,18 @@ public class ObjectProblemController {
         jsonObject.put("objectproblems",jsonArray);
         return jsonObject;
     }
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "api/getTestProblem",method = RequestMethod.GET)
+    public Object getTestProblem(HttpServletRequest request, HttpSession session){
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        //JSONArray是一个数组对象
+        List<ObjectProblem>  allobj = objectProblemServer.getTestProblem();
+        for(int i=0;i<allobj.size();i++){
+            jsonArray.add(allobj.get(i));
+        }
+        jsonObject.put("objectproblems",jsonArray);
+        return jsonObject;
+    }
 }
