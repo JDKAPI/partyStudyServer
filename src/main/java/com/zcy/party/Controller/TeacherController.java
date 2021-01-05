@@ -5,12 +5,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zcy.party.dao.OrganizationerMapper;
 import com.zcy.party.dao.SubjectProblemMapper;
-import com.zcy.party.domain.Organizationer;
-import com.zcy.party.domain.Paper;
-import com.zcy.party.domain.Student;
-import com.zcy.party.domain.SubjectProblem;
+import com.zcy.party.domain.*;
 import com.zcy.party.server.PaperServer;
 import com.zcy.party.server.impl.PaperServerImpl;
+import com.zcy.party.server.impl.StuAnswerServerImpl;
 import com.zcy.party.server.impl.StudentServerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -34,6 +31,32 @@ public class TeacherController {
     SubjectProblemMapper subjectProblemMapper;
     @Autowired
     StudentServerImpl studentServer;
+    @Autowired
+    StuAnswerServerImpl stuAnswerServer;
+
+    @CrossOrigin
+    @RequestMapping(value = "/api/getAllAnswer",method = RequestMethod.GET)
+    public Object getAllAnswer(HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
+        List<StuAnswer> list = stuAnswerServer.getAllAnswer();
+        JSONArray jsonArray = new JSONArray();
+        for(int i=0;i<list.size();i++){
+            jsonArray.add(list.get(i));
+        }
+        jsonObject.put("info",jsonArray);
+        return jsonObject;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/api/getAnswerById",method = RequestMethod.GET)
+    public Object getAnswerById(HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
+        int id = Integer.parseInt(request.getParameter("id").toString());
+        StuAnswer stuAnswer = stuAnswerServer.getAnswerById(id);
+        jsonObject.put("info",stuAnswer);
+        return jsonObject;
+    }
+
     @CrossOrigin
     @RequestMapping(value = "/api/getTeacherInfo",method = RequestMethod.GET)
     public Object getTeacherInfo(HttpServletRequest request){
@@ -156,5 +179,41 @@ public class TeacherController {
          JSONObject jsonObject = new JSONObject();
          jsonObject.put("studentInfo",jsonArray);
          return jsonObject;
+    }
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "api/addStudentPaper",method = RequestMethod.POST)
+    public Object addStudentPaper(HttpServletRequest request) throws IOException {
+        String s = StreamUtils.copyToString(request.getInputStream(), Charset.forName("UTF-8"));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject = JSON.parseObject(s);
+        int paperid = Integer.parseInt(jsonObject.get("paperId").toString());
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = JSONArray.parseArray(jsonObject.get("stuIds").toString());
+        int result = 0;
+        for(int i=0;i<jsonArray.size();i++){
+            result += studentServer.sendPaperToStudent(jsonArray.get(i).toString(),paperid);
+        }
+        JSONObject jsonObject1 = new JSONObject();
+        if(result==jsonArray.size())
+            jsonObject1.put("code",200);
+        else jsonObject1.put("code",400);
+        return jsonObject1;
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "api/insertSubGrade",method = RequestMethod.POST)
+    public Object insertSubGrade(HttpServletRequest request) throws IOException {
+        String s = StreamUtils.copyToString(request.getInputStream(), Charset.forName("UTF-8"));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject = JSON.parseObject(s);
+        int id = Integer.parseInt(jsonObject.get("id").toString());
+        float subGrade = Float.parseFloat(jsonObject.get("subGrade").toString());
+        int i =stuAnswerServer.insertSubGrade(id,subGrade);
+        JSONObject jsonObject1 = new JSONObject();
+        if(i>0) jsonObject1.put("code",200);
+        else jsonObject1.put("code",400);
+        return jsonObject1;
     }
 }

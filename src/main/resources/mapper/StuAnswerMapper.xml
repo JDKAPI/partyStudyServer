@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zcy.party.dao.StuAnswerMapper">
+
+    <insert id="insertStuAnswer">
+        insert into stuanswer(stuId,paperId,objGrade,eryi,erer,ersan,ersi,erwu) values (#{stuId},#{paperId},#{objGrade},#{eryi},#{erer},#{ersan},#{ersi},#{erwu});
+    </insert>
+    <resultMap id="getAllAnswerMap" type="com.zcy.party.domain.StuAnswer">
+        <id property="id" column="id"/>
+        <result property="objGrade" column="objGrade"/>
+        <result property="eryi" column="eryi"/>
+        <result property="erer" column="erer"/>
+        <result property="ersan" column="ersan"/>
+        <result property="ersi" column="ersi"/>
+        <result property="erwu" column="erwu"/>
+        <association property="stuId" column="stuId" select="com.zcy.party.dao.StudentMapper.getStuByStuID"/>
+        <association property="paper" column="paperId" select="com.zcy.party.dao.PaperMapper.getPaperInfoById"/>
+    </resultMap>
+    <select id="getAllAnswer" resultMap="getAllAnswerMap">
+        select * from stuanswer where status=0;
+    </select>
+    <select id="getAnswerById" resultMap="getAllAnswerMap" parameterType="java.lang.Integer">
+        select  * from stuanswer where id=#{id};
+    </select>
+    <update id="insertSubGrade">
+        update stuanswer set subGrade=#{subGrade},status=1 where id=#{id};
+    </update>
+</mapper>

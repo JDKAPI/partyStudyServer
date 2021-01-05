@@ -1,7 +1,9 @@
 package com.zcy.party.server.impl;
 
 import com.zcy.party.dao.StudentMapper;
+import com.zcy.party.domain.Paper;
 import com.zcy.party.domain.ResultData;
+import com.zcy.party.domain.StuPaper;
 import com.zcy.party.domain.Student;
 import com.zcy.party.server.StudentServer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +34,15 @@ public class StudentServerImpl implements StudentServer {
     @Override
     public List<Student> getStuByTeacherId(int id) {
         return studentMapper.getStuByTeacherId(id);
+    }
+
+    @Override
+    public int sendPaperToStudent(String stu_id, int paper_id) {
+        return studentMapper.sendPaperToStudent(stu_id,paper_id);
+    }
+
+    @Override
+    public List<StuPaper> getMyPaper(String id) {
+        return studentMapper.getMyPaper(id);
     }
 }

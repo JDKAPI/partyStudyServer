@@ -53,4 +53,15 @@
     <select id="getStuByTeacherId" resultMap="getStuByStuIDMapper">
         select * from student where stu_orgamem = #{id};
     </select>
+    <insert id="sendPaperToStudent">
+        insert into stupaper(stu_id,paper_id) values(#{stuId},#{paperId});
+    </insert>
+
+    <resultMap id="getMyPaperMap" type="com.zcy.party.domain.StuPaper">
+        <id property="id" column="id"/>
+       <association property="paper" column="paper_id" select="com.zcy.party.dao.PaperMapper.getPaperInfoById" />
+    </resultMap>
+    <select id="getMyPaper" resultMap="getMyPaperMap">
+        select paper_id from stupaper where stu_id = #{id};
+    </select>
 </mapper>

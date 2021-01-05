@@ -1,16 +1,17 @@
 package com.zcy.party.Controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zcy.party.dao.GradeMapper;
 import com.zcy.party.dao.SchoolMapper;
-import com.zcy.party.domain.Grade;
-import com.zcy.party.domain.ResultData;
-import com.zcy.party.domain.Student;
+import com.zcy.party.domain.*;
 import com.zcy.party.server.GradeServer;
+import com.zcy.party.server.StuAnswerServer;
 import com.zcy.party.server.StudentServer;
 import com.zcy.party.server.impl.GradeServerImpl;
+import com.zcy.party.server.impl.StuAnswerServerImpl;
 import com.zcy.party.server.impl.StudentServerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -33,6 +35,27 @@ public class StudentController {
     GradeServerImpl gradeServer;
     @Autowired
     SchoolMapper schoolMapper;
+    @Autowired
+    StuAnswerServerImpl stuAnswerServer;
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "api/insertStuAnswer",method = RequestMethod.POST)
+    public Object insertStuAnswer(HttpServletRequest request) throws IOException {
+        String s = StreamUtils.copyToString(request.getInputStream(),Charset.forName("UTF-8"));
+        JSONObject jsonObject = JSON.parseObject(s);
+        String stuId = jsonObject.get("stuId").toString();
+        int paperId =Integer.parseInt( jsonObject.get("paperId").toString());
+        float objGrade = Float.parseFloat(jsonObject.get("objGrade").toString());
+        JSONArray jsonArray = JSONArray.parseArray(jsonObject.get("subAnswer").toString());
+        int i = stuAnswerServer.insertStuAnswer(stuId,paperId,objGrade,jsonArray.get(0).toString(),
+                jsonArray.get(1).toString(),jsonArray.get(2).toString(),jsonArray.get(3).toString(),
+                jsonArray.get(4).toString());
+        JSONObject jsonObject1 = new JSONObject();
+         if(i>0) jsonObject1.put("code",200);
+         else jsonObject1.put("code",400);
+         return jsonObject1;
+    }
     @ResponseBody
     @CrossOrigin
     @RequestMapping(value = "/api/insertGrade",method = RequestMethod.POST)
@@ -144,6 +167,63 @@ public class StudentController {
         }
         jsonObject.put("students",jsonArray);
         return jsonObject;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "api/getMypaper",method = RequestMethod.GET)
+    public Object getMapaper(HttpServletRequest request){
+         String s = request.getParameter("id");
+         List<StuPaper> list = studentServer.getMyPaper(s);
+         JSONArray jsonArray = new JSONArray();
+         class ResultData{
+             String name;
+             String creator;
+             String createTime;
+             int id;
+
+             public int getId() {
+                 return id;
+             }
+
+             public void setId(int id) {
+                 this.id = id;
+             }
+
+             public String getName() {
+                 return name;
+             }
+
+             public void setName(String name) {
+                 this.name = name;
+             }
+
+             public String getCreator() {
+                 return creator;
+             }
+
+             public void setCreator(String creator) {
+                 this.creator = creator;
+             }
+
+             public String getCreateTime() {
+                 return createTime;
+             }
+
+             public void setCreateTime(String createTime) {
+                 this.createTime = createTime;
+             }
+         }
+         for(int i=0;i<list.size();i++){
+             ResultData resultData = new ResultData();
+             resultData.setId(list.get(i).getPaper().getId());
+             resultData.setName(list.get(i).getPaper().getName());
+             resultData.setCreator(list.get(i).getPaper().getCreator());
+             resultData.setCreateTime(list.get(i).getPaper().getCreateTime());
+             jsonArray.add(resultData);
+         }
+         JSONObject jsonObject = new JSONObject();
+         jsonObject.put("paperInfo",jsonArray);
+         return jsonObject;
     }
 
     @CrossOrigin
